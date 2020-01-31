@@ -5,7 +5,7 @@ import Spiner from "../layout/Spinner";
 
 
 const UsersList = ({ users , loading}) => {
-  if(!users){
+  if(loading){
     return <Spiner />
   }
   return (
@@ -18,8 +18,8 @@ const UsersList = ({ users , loading}) => {
 };
 
 
-User.PropTypes = {
-  User: PropTypes.array.isRequired,
+UsersList.propTypes = {
+  users: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
 }
 

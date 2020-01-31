@@ -12,7 +12,7 @@ class App extends Component {
 
   async componentDidMount() {
     this.setState(() => ({ dataLoading: true }));
-    const res = await axios.get('https://api.github.com/users');
+    const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
     this.setState(() => ({ dataLoading: false, users: res.data }));
   }
 
@@ -21,7 +21,7 @@ class App extends Component {
       <div className='App'>
         <Navbar title='Github Finder' />
         <div className='container'>
-          <UserList loading={this.props.dataLoading} users={this.state.users} />
+          <UserList loading={this.state.dataLoading} users={this.state.users} />
         </div>
       </div>
     );
