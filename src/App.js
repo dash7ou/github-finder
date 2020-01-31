@@ -23,6 +23,7 @@ class App extends Component {
     this.setState(() => ({ dataLoading: true }));
     try{
       const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+      if(res.data.items.length === 0) return this.setAlert("No User Found", "light")
       this.setState(() => ({ dataLoading: false, users: res.data.items }));
     }catch(err){
       this.setState({
@@ -37,10 +38,10 @@ class App extends Component {
 
   setAlert = (msg , type)=>{
     if(!msg && !type) {
-      this.setState(()=>({alert: null}))
-    }else{
-      this.setState({ alert: {msg, type}, dataLoading:false})
+      return this.setState(()=>({alert: null}))
     }
+    return this.setState({ alert: {msg, type}, dataLoading:false})
+    
   }
   render() {
     return (
