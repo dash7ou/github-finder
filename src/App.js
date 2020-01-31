@@ -20,7 +20,9 @@ class App extends Component {
     return (
       <div className='App'>
         <Navbar title='Github Finder' />
-        <div className='container'></div>
+        <div className='container'>
+          <UserList loading={this.props.dataLoading} users={this.state.users} />
+        </div>
       </div>
     );
   }
