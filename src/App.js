@@ -28,15 +28,13 @@ class App extends Component {
     this.setState(() => ({ dataLoading: true }));
     try{
       const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-      if(res.data === undefined){
-        this.setState({user: {}})
-        return this.setAlert("No User Found", "light")
-      }
       this.setState(() => ({ dataLoading: false, user: res.data }));
     }catch(err){
       this.setState({
-        dataLoading: false
+        dataLoading: false,
+        user: {}
       })
+      return this.setAlert("No User Found", "light")
     }
   }
 
