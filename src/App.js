@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import {BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Navbar from './components/layout/Navbar';
 import UserList from './components/users/UsersList';
 import Search from "./components/users/Search";
@@ -23,7 +24,10 @@ class App extends Component {
     this.setState(() => ({ dataLoading: true }));
     try{
       const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-      if(res.data.items.length === 0) return this.setAlert("No User Found", "light")
+      if(res.data.items.length === 0){
+        this.setState({users: []})
+        return this.setAlert("No User Found", "light")
+      }
       this.setState(() => ({ dataLoading: false, users: res.data.items }));
     }catch(err){
       this.setState({
@@ -45,19 +49,27 @@ class App extends Component {
   }
   render() {
     return (
-      <div className='App'>
-        <Navbar title='Github Finder' />
-        <div className='container'>
-          { this.state.alert && <Alert alert={this.state.alert}/>}
-          <Search 
-            searchUsers={this.searchUsers} 
-            clearUsers={this.clearUsers} 
-            users={this.state.users}
-            setAlert={this.setAlert}
-          />
-          <UserList loading={this.state.dataLoading} users={this.state.users} />
+      <Router>
+        <div className='App'>
+          <Navbar title='Github Finder' />
+          <div className='container'>
+            <Switch>
+              <Route exact path="/" render={props=>(
+                <Fragment>
+                  { this.state.alert && <Alert alert={this.state.alert}/>}
+                      <Search 
+                        searchUsers={this.searchUsers} 
+                        clearUsers={this.clearUsers} 
+                        users={this.state.users}
+                        setAlert={this.setAlert}
+                      />
+                      <UserList loading={this.state.dataLoading} users={this.state.users} />
+                    </Fragment>
+              )} />
+            </Switch>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
