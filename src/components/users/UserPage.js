@@ -2,10 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Spiner from "../layout/Spinner";
+import Repos from "../repos/Repos"
+
 
 class UserPage extends Component{
     componentDidMount(){
         this.props.getUser(this.props.match.params.login)
+        this.props.getUserRepos(this.props.match.params.login)
     }
        
     
@@ -13,6 +16,8 @@ class UserPage extends Component{
         loading: PropTypes.bool.isRequired,
         user: PropTypes.object.isRequired,
         getUser: PropTypes.func.isRequired,
+        getUserRepos: PropTypes.func.isRequired,
+        repos: PropTypes.array.isRequired,
     }
 
     render(){
@@ -78,6 +83,7 @@ class UserPage extends Component{
                     <div className="badge badge-light"> Public Repos: {public_repos}</div>
                     <div className="badge badge-dark"> Public Gists: {public_gists}</div>
                 </div>
+                <Repos repos={this.props.repos}/>
             </Fragment>
         )
     }
