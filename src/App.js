@@ -6,6 +6,7 @@ import UserList from './components/users/UsersList';
 import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
+import UserPage from "./components/users/UserPage"
 import './App.css';
 
 
@@ -13,6 +14,7 @@ class App extends Component {
   state = {
     dataLoading: false,
     users: [],
+    user: {},
     alert: null
   };
 
@@ -21,6 +23,22 @@ class App extends Component {
   //   const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
   //   this.setState(() => ({ dataLoading: false, users: res.data }));
   // }
+
+  getUser = async (username)=>{
+    this.setState(() => ({ dataLoading: true }));
+    try{
+      const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+      if(res.data === undefined){
+        this.setState({user: {}})
+        return this.setAlert("No User Found", "light")
+      }
+      this.setState(() => ({ dataLoading: false, user: res.data }));
+    }catch(err){
+      this.setState({
+        dataLoading: false
+      })
+    }
+  }
 
   searchUsers = async (text)=>{
     this.setState(() => ({ dataLoading: true }));
@@ -50,15 +68,16 @@ class App extends Component {
     
   }
   render() {
+    const {user, dataLoading} = this.state;
     return (
       <Router>
         <div className='App'>
           <Navbar title='Github Finder' />
           <div className='container'>
+            { this.state.alert && <Alert alert={this.state.alert}/>}
             <Switch>
               <Route exact path="/" render={props=>(
                 <Fragment>
-                  { this.state.alert && <Alert alert={this.state.alert}/>}
                       <Search 
                         searchUsers={this.searchUsers} 
                         clearUsers={this.clearUsers} 
@@ -69,6 +88,9 @@ class App extends Component {
                     </Fragment>
               )} />
               <Route exact path="/about" component={About} />
+              <Route exact path="/user/:login" render ={props=>(
+                <UserPage {...props} getUser={this.getUser} user={user} loading={dataLoading}/>
+              )}/>
             </Switch>
           </div>
         </div>
