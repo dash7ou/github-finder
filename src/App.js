@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import UserList from './components/users/UsersList';

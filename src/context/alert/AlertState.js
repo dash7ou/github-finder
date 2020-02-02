@@ -3,7 +3,6 @@ import AlertContext from "./alertContext";
 import AlertReducer from "./alertReducer";
 import { SET_ALERT } from "../type";
 
-
 const AlertState = props =>{
     const initialState = null;
 
@@ -21,7 +20,7 @@ const AlertState = props =>{
             type: SET_ALERT,
             alert
         });
-		// setDataLoading(false);
+		// GithubState.setDataLoading(false);
 	};
 
     return (
