@@ -1,21 +1,23 @@
 import React, {useState, useContext} from "react";
 import PropTypes from 'prop-types';
 import GithubContext from "../../context/gihub/githubContext";
+import AlertContext from "../../context/alert/alertContext";
 
 
 const Search =(props)=>{
-    const {searchUsers, users, clearUsers} = useContext(GithubContext)
+    const {searchUsers, users, clearUsers} = useContext(GithubContext);
+    const  {setAlert} = useContext(AlertContext)
     const [ text, setText ] = useState('')
 
     const onChange = (e)=>{
         setText(e.target.value)
-        props.setAlert(null, null)
+        setAlert(null, null)
     }
 
     const onSubmit = (e)=>{
         e.preventDefault();
         if(text === ''){
-            props.setAlert('please enter something', 'light')
+           setAlert('please enter something', 'light')
         }
 
         searchUsers(text);
