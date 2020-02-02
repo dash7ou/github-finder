@@ -51,10 +51,6 @@ const App = () => {
 		}
 	};
 
-	const clearUsers = () => {
-		setUsers([]);
-	};
-
 	const showAlert = (msg, type) => {
 		if (!msg && !type) {
 			setAlert(null);
@@ -77,11 +73,9 @@ const App = () => {
 								render={(props) => (
 									<Fragment>
 										<Search
-											clearUsers={clearUsers}
-											users={users}
 											setAlert={showAlert}
 										/>
-										<UserList loading={dataLoading} users={users} />
+										<UserList />
 									</Fragment>
 								)}
 							/>

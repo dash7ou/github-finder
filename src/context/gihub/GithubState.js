@@ -6,7 +6,7 @@ import GithubReducer from "./githubReducer";
 import {
     SEARCH_USERS,
     SET_LOADING,
-    CLEAR_USER,
+    CLEAR_USERS,
     GET_REPOS,
     GET_USER
 } from "../type";
@@ -31,10 +31,7 @@ const GithubState = props =>{
 					.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
 			);
 			if (res.data.items.length === 0) {
-				dispatch({
-                    type: SEARCH_USERS,
-                    payload: []
-                })
+				clearUsers()
 				// return showAlert('No User Found', 'light');
 			}
 			setDataLoading(false);
@@ -47,6 +44,7 @@ const GithubState = props =>{
 		}
 	};
 
+    const clearUsers = ()=> dispatch({type: CLEAR_USERS})
 
     const setDataLoading = state => dispatch({ type: SET_LOADING, loading: state })
     return <GithubContext.Provider 
@@ -55,7 +53,8 @@ const GithubState = props =>{
             user: state.user,
             repos: state.repos,
             loading: state.dataLoading,
-            searchUsers
+            searchUsers,
+            clearUsers
         }}>
             {props.children}
         </GithubContext.Provider>

@@ -4,7 +4,7 @@ import GithubContext from "../../context/gihub/githubContext";
 
 
 const Search =(props)=>{
-    const {searchUsers} = useContext(GithubContext)
+    const {searchUsers, users, clearUsers} = useContext(GithubContext)
     const [ text, setText ] = useState('')
 
     const onChange = (e)=>{
@@ -23,7 +23,7 @@ const Search =(props)=>{
     }
 
     const onClick = ()=>{
-        props.clearUsers()
+        clearUsers()
     }
 
         return(
@@ -38,7 +38,7 @@ const Search =(props)=>{
                     />
                     <input type='submit' value='Search' className='btn btn-dark btn-block'/>
                 </form>
-                {props.users.length > 0 && <button className="btn btn-light btn-block" onClick={onClick}> Clear </button>}
+                {users.length > 0 && <button className="btn btn-light btn-block" onClick={onClick}> Clear </button>}
             </div>
         )
     
@@ -47,7 +47,6 @@ const Search =(props)=>{
 
 
 Search.propTypes = {
-    clearUsers: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
 }
 
