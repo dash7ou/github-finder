@@ -18,38 +18,10 @@ const App = () => {
 	const [ dataLoading, setDataLoading ] = useState(false);
 
 
-	const getUser = async (username) => {
-		setDataLoading(true);
-		try {
-			const res = await axios.get(
-				`https://api.github.com/users/${username}?client_id=${process.env
-					.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-			);
-			setDataLoading(false);
-			setUser(res.data);
-		} catch (err) {
-			setDataLoading(false);
-			setUser({});
-			return showAlert('No User Found', 'light');
-		}
-	};
 
 
-	const getUserRepos = async (username) => {
-		setDataLoading(true);
-		try {
-			const res = await axios.get(
-				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env
-					.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-			);
-			setDataLoading(false);
-			setRepos(res.data);
-		} catch (err) {
-			setDataLoading(false);
-			setRepos([]);
-			return showAlert('No repo Found', 'light');
-		}
-	};
+
+
 
 	const showAlert = (msg, type) => {
 		if (!msg && !type) {
@@ -86,11 +58,6 @@ const App = () => {
 								render={(props) => (
 									<UserPage
 										{...props}
-										getUser={getUser}
-										user={user}
-										loading={dataLoading}
-										repos={repos}
-										getUserRepos={getUserRepos}
 									/>
 								)}
 							/>

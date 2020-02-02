@@ -19,6 +19,16 @@ export default (state, action) =>{
                 ...state,
                 users: []
             }
+        case GET_USER:
+            return{
+                ...state,
+                user: action.payload
+            }
+        case GET_REPOS:
+            return{
+                ...state,
+                repos: action.payload
+            }
         case SET_LOADING:
             return {
                 ...state,

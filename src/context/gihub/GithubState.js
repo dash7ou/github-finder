@@ -42,6 +42,51 @@ const GithubState = props =>{
 		} catch (err) {
 			setDataLoading(false);
 		}
+    };
+    
+    const getUser = async (username) => {
+		setDataLoading(true);
+		try {
+			const res = await axios.get(
+				`https://api.github.com/users/${username}?client_id=${process.env
+					.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+			);
+			setDataLoading(false);
+			dispatch({
+                type: GET_USER,
+                payload: res.data
+            })
+		} catch (err) {
+			setDataLoading(false);
+            dispatch({
+                type: GET_USER,
+                payload: {}
+            })
+			// return showAlert('No User Found', 'light');
+		}
+    };
+    
+
+    const getUserRepos = async (username) => {
+		setDataLoading(true);
+		try {
+			const res = await axios.get(
+				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env
+					.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+			);
+			setDataLoading(false);
+			dispatch({
+                type: GET_REPOS,
+                payload: res.data
+            })
+		} catch (err) {
+			setDataLoading(false);
+			dispatch({
+                type: GET_REPOS,
+                payload: []
+            })
+			// return showAlert('No repo Found', 'light');
+		}
 	};
 
     const clearUsers = ()=> dispatch({type: CLEAR_USERS})
@@ -54,7 +99,9 @@ const GithubState = props =>{
             repos: state.repos,
             loading: state.dataLoading,
             searchUsers,
-            clearUsers
+            clearUsers,
+            getUser,
+            getUserRepos
         }}>
             {props.children}
         </GithubContext.Provider>
