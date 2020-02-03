@@ -25,8 +25,7 @@ const App = () => {
 									path='/'
 									render={(props) => (
 										<Fragment>
-											<Search
-											/>
+											<Search/>
 											<UserList />
 										</Fragment>
 									)}
