@@ -4,8 +4,8 @@ import Search from "../users/Search";
 
 const Home = ()=>(
     <Fragment>
-        <UserList/>
         <Search />
+        <UserList/>
     </Fragment>
 )
 

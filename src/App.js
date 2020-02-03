@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import UserList from './components/users/UsersList';
-import Search from './components/users/Search';
+import Home from "./components/pages/Home";
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import UserPage from './components/users/UserPage';
@@ -23,22 +22,13 @@ const App = () => {
 								<Route
 									exact
 									path='/'
-									render={(props) => (
-										<Fragment>
-											<Search/>
-											<UserList />
-										</Fragment>
-									)}
+									component = {Home}
 								/>
 								<Route exact path='/about' component={About} />
 								<Route
 									exact
 									path='/user/:login'
-									render={(props) => (
-										<UserPage
-											{...props}
-										/>
-									)}
+									component= {UserPage}
 								/>
 							</Switch>
 						</div>
