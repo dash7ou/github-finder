@@ -14,7 +14,6 @@ const App = () => {
 	return (
 		<GithubState>
 			<AlertState>
-				<h1>DASH</h1>
 				<Router>
 					<div className='App'>
 						<Navbar title='Github Finder' />
