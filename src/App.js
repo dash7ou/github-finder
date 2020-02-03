@@ -6,7 +6,8 @@ import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import UserPage from './components/users/UserPage';
 import GithubState from "./context/gihub/GithubState";
-import AlertState from "./context/alert/AlertState.js"
+import AlertState from "./context/alert/AlertState.js";
+import NotFound from "./components/pages/NotFound";
 import './App.css';
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
 									path='/user/:login'
 									component= {UserPage}
 								/>
+								<Route component={NotFound} />
 							</Switch>
 						</div>
 					</div>
